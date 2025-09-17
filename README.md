@@ -32,6 +32,19 @@ cd RAG
 pip install -r requirements.txt
 ```
 
+## Ejemplo completo de RAG paso a paso
+
+El archivo [`rag-tfm-test.ipynb`](rag-tfm-test.ipynb) contiene un ejemplo completo y detallado de cómo implementar un pipeline de Retrieval-Augmented Generation (RAG) desde cero.  
+En este notebook se muestra, paso a paso:
+
+  - Cómo preparar y procesar los datos.
+  - Cómo realizar la ingesta en la base de datos vectorial (Weaviate).
+  - Cómo indexar los documentos.
+  - Cómo consultar el sistema usando modelos de lenguaje.
+
+Este ejemplo está pensado para usuarios que quieren aprender o replicar el flujo completo de un sistema RAG aplicado a Arqueología y Prehistoria.
+
+
 ## Licencia
 
 CC0-1.0 license.
