@@ -1,9 +1,12 @@
 # RAG-CSIC
 
-Repositorio para experimentos y pipelines de Retrieval-Augmented Generation (RAG) en Arqueología y Prehistoria.
+Repositorio para experimentos y pipelines de un sistema Retrieval-Augmented Generation (RAG) sobre recursos de IDEArq.
 
-## Estructura recomendada
+## Descripción
 
+Este proyecto busca aplicar técnicas de RAG para enriquecer el análisis y la consulta de documentación arqueológica, facilitando la integración de modelos de lenguaje con bases de datos especializadas.
+
+## Estructura
 ```
 RAG/
 ├── ingest_e5.py                # Script de ingesta para embeddings E5
@@ -22,18 +25,37 @@ RAG/
 └── README.md                   # Documentación y guía
 ```
 
-## Recomendaciones
-- Mantén los scripts de ingesta y consulta separados por modelo.
-- Guarda los notebooks en la carpeta `notebooks/`.
-- Los datos fuente (PDFs) deben ir en `pdf_articulos_idearq/`.
-- Los resultados y análisis en `results/`.
-- Documenta dependencias en `requirements.txt`.
+## Instalación
+
+Requiere Python 3.9+.
+
+```bash
+git clone https://github.com/aguayoe/RAG.git
+cd RAG
+pip install -r requirements.txt
+```
 
 ## Uso rápido
-1. Ejecuta el script de ingesta según el modelo de embedding.
-2. Usa el script de consulta para hacer preguntas.
-3. Realiza experimentos y análisis en los notebooks.
 
-## Control de versiones
-- Haz commits frecuentes y descriptivos.
-- Sube el repositorio a GitHub para copia de seguridad y colaboración.
+**Ingesta de datos:**
+```bash
+python ingest_e5.py
+```
+
+**Consulta:**
+```bash
+python query_e5.py "¿Cuál es el contexto de la cueva X?"
+```
+
+**Experimentos:**
+Abre los notebooks en la carpeta `notebooks/` con JupyterLab o VS Code.
+
+## Contribuir
+
+¿Ideas nuevas? ¡Bienvenidas!
+- Abre un issue con sugerencias o errores.
+- Haz un fork y envía tu Pull Request.
+- Sigue el estilo de nombres y comentarios del repo.
+
+## Licencia
+CC0-1.0 license.
