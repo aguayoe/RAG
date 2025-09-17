@@ -15,13 +15,15 @@ RAG/
 ├── rag-tfm-test.ipynb                     # Notebook de prueba
 ├── results/                               # Resultados de evaluaciones 
 ├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
+    ├──  weaviate_data                     # Base de datos vectorial              
+    └──  docker-compose.yml                # Fichero de instalación del contenedor
 ├── requirements.txt                       # Dependencias del proyecto
 └── README.md                              # Documentación y guía
 ```
 
 ## Instalación
 
-El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
+El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se ha utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
 
 ```bash
 git clone https://github.com/aguayoe/RAG.git
