@@ -15,8 +15,8 @@ RAG/
 ├── rag-tfm-test.ipynb                     # Notebook de prueba
 ├── results/                               # Resultados de evaluaciones 
 ├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
-    ├──  weaviate_data                     # Base de datos vectorial              
-    └──  docker-compose.yml                # Fichero de instalación del contenedor
+|   ├──  weaviate_data                     # Base de datos vectorial              
+|    └──  docker-compose.yml                # Fichero de instalación del contenedor
 ├── requirements.txt                       # Dependencias del proyecto
 └── README.md                              # Documentación y guía
 ```
