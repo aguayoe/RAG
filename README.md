@@ -16,7 +16,7 @@ RAG/
 ├── results/                               # Resultados de evaluaciones 
 ├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
 |   ├──  weaviate_data                     # Base de datos vectorial              
-|    └──  docker-compose.yml                # Fichero de instalación del contenedor
+|   └──  docker-compose.yml                # Fichero de instalación del contenedor
 ├── requirements.txt                       # Dependencias del proyecto
 └── README.md                              # Documentación y guía
 ```
@@ -24,6 +24,7 @@ RAG/
 ## Instalación
 
 El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se ha utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
+Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace.
 
 ```bash
 git clone https://github.com/aguayoe/RAG.git
