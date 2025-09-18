@@ -42,6 +42,17 @@ python backend_flask.py
 ```bash
 streamlit run app_streamlit.py
 ```
+Y ejecutar el modelo de lenguaje en otra terminal (inicializando Ollama previamente):
+
+```bash
+ollama run hf.co/MaziyarPanahi/Phi-3.5-mini-instruct-GGUF:Q6_K
+```
+Por último, levantar el contenedor de Docker:
+
+```bash
+docker compose up
+```
+
 ## Ejemplo de RAG paso a paso
 
 El archivo [`rag-tfm-test.ipynb`](rag-tfm-test.ipynb) contiene un ejemplo completo y detallado de cómo implementar un pipeline de Retrieval-Augmented Generation (RAG) desde cero.  
