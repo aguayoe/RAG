@@ -27,15 +27,22 @@ RAG/
 ## Instalación
 
 El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se ha utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
-Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace.
+Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace. Para realizar el RAG se ha utilizado el framework LangChain y se ha desarrollado una interfaz con Streamlit y Flask.
 
 ```bash
 git clone https://github.com/aguayoe/RAG.git
 cd RAG
 pip install -r requirements.txt
 ```
+Para ejecutar streamlit, aplica cada línea de código en una terminal distinta:
 
-## Ejemplo completo de RAG paso a paso
+```bash
+python backend_flask.py
+```
+```bash
+streamlit run app_streamlit.py
+```
+## Ejemplo de RAG paso a paso
 
 El archivo [`rag-tfm-test.ipynb`](rag-tfm-test.ipynb) contiene un ejemplo completo y detallado de cómo implementar un pipeline de Retrieval-Augmented Generation (RAG) desde cero.  
 En este notebook se muestra, paso a paso:
@@ -45,7 +52,7 @@ En este notebook se muestra, paso a paso:
   - Cómo indexar los documentos.
   - Cómo consultar el sistema usando modelos de lenguaje.
 
-Este ejemplo está pensado para usuarios que quieren aprender o replicar el flujo completo de un sistema RAG aplicado a Arqueología y Prehistoria.
+Este ejemplo está pensado para usuarios que quieren aprender o replicar el flujo de un sistema RAG con LangChain y LangGraph.
 
 
 ## Licencia
