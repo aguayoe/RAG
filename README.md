@@ -11,8 +11,7 @@ Este proyecto busca aplicar técnicas de RAG para enriquecer el análisis y la c
 ```
 RAG/
 ├── rag-idearq-langgraph-weaviate.ipynb    # Notebook del RAG y evaluación
-├── rag-indexacion-weaviate.ipynb          # Notebook de indexación
-├── rag-tfm-test.ipynb                     # Notebook de prueba
+├── rag-indexacion-weaviate.ipynb          # Notebook de indexación                
 ├── results/                               # Resultados de evaluaciones 
 ├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
 |   ├──  weaviate_data                     # Base de datos vectorial              
@@ -52,19 +51,6 @@ Por último, levantar el contenedor de Docker:
 ```bash
 docker compose up
 ```
-
-## Ejemplo de RAG paso a paso
-
-El archivo [`rag-tfm-test.ipynb`](rag-tfm-test.ipynb) contiene un ejemplo completo y detallado de cómo implementar un pipeline de Retrieval-Augmented Generation (RAG) desde cero.  
-En este notebook se muestra, paso a paso:
-
-  - Cómo preparar y procesar los datos.
-  - Cómo realizar la ingesta en la base de datos vectorial (Weaviate).
-  - Cómo indexar los documentos.
-  - Cómo consultar el sistema usando modelos de lenguaje.
-
-Este ejemplo está pensado para usuarios que quieren aprender o replicar el flujo de un sistema RAG con LangChain y LangGraph.
-
 
 ## Licencia
 
