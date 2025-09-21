@@ -12,7 +12,7 @@ Este proyecto busca aplicar técnicas de RAG para enriquecer el análisis y la c
 RAG/
 ├── rag-idearq-langgraph-weaviate.ipynb    # Notebook del RAG y evaluación
 ├── rag-indexacion-weaviate.ipynb          # Notebook de indexación                
-├── results/                               # Resultados de evaluaciones 
+├── results.pdf                            # Resultados de evaluaciones 
 ├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
 |   ├──  weaviate_data                     # Base de datos vectorial              
 |   └──  docker-compose.yml                # Fichero de instalación del contenedor
