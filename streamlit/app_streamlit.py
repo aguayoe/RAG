@@ -1,3 +1,10 @@
+"""
+Interfaz de Streamlit de un sistema RAG
+
+Autor: Elena Aguayo Jara
+Fecha: septiembre de 2025
+"""
+
 import streamlit as st
 import requests
 import time
