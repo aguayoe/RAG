@@ -4,10 +4,10 @@ import time
 import pandas as pd
 import os
 
-# --- Configuración de la API del Backend ---
+# Configuración de la API del Backend 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:5001")
 
-# --- Funciones de la API ---
+# Funciones de la API 
 def start_evaluation(settings: dict) -> str | None:
     try:
         response = requests.post(f"{BACKEND_URL}/evaluate", json=settings)
@@ -26,12 +26,12 @@ def get_status(job_id: str) -> dict | None:
         st.error(f"Error al consultar el estado: {e}")
         return None
 
-# --- Interfaz de Streamlit ---
+# Interfaz de Streamlit 
 st.set_page_config(layout="wide", page_title="RAG-IDEArq")
 st.title("🏛️ Sistema RAG de IDEArq")
 # st.markdown("Herramienta para ejecutar y evaluar múltiples combinaciones de LLMs, embeddings y prompts.")
 
-# --- Barra Lateral de Configuración ---
+# Barra Lateral de Configuración 
 with st.sidebar:
     st.header("⚙️ Parámetros de ejecución")
     question = st.text_area("Haz una pregunta", "¿Cuáles son las dataciones más antiguas para la minería del sílex en el centro peninsular?", height=100)
@@ -47,7 +47,7 @@ with st.sidebar:
 
     run_button = st.button("🚀 Ejecutar", use_container_width=True)
 
-# --- Lógica de Estado de la Sesión ---
+# Lógica de Estado de la Sesión 
 if 'job_id' not in st.session_state:
     st.session_state.job_id = None
 
@@ -65,7 +65,7 @@ if run_button:
             st.session_state.job_id = job_id
             st.info(f"Trabajo iniciado con ID: {job_id}. La interfaz se actualizará automáticamente.")
 
-# --- Área Principal de Resultados ---
+# Resultados
 if st.session_state.job_id:
     job_id = st.session_state.job_id
     status_text = st.empty()
@@ -87,7 +87,7 @@ if st.session_state.job_id:
             all_results = status_data.get("results", [])
 
             if all_results:
-                result = all_results[0]  # Solo tomamos el primer resultado
+                result = all_results[0] 
 
                 with results_container:
                     # Mostrar información del modelo
@@ -101,7 +101,7 @@ if st.session_state.job_id:
                     st.markdown("### 💬 Respuesta:")
                     st.write(result.get('answer', 'Sin respuesta'))
 
-                    # Mostrar información adicional en un expander
+                    # Mostrar información adicional 
                     with st.expander("📊 Detalles técnicos"):
                         st.write(f"**Prompt usado:** {result.get('prompt', 'N/A')}")
                         st.write(f"**Tiempo de respuesta:** {result.get('latency', 0):.2f} segundos")
