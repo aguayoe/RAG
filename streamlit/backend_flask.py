@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-RAG Backend Flask Application
+Aplicación de RAG para ejecutar un sistema RAG en Streamlit
 
-A Flask application for running RAG (Retrieval-Augmented Generation) evaluations
-with multiple embedding models, LLMs, and prompts.
-
-Author: Consolidated version
-Date: 2025
+Autor: Elena Aguayo Jara
+Fecha: 2025
 """
 
 from __future__ import annotations
