@@ -23,10 +23,10 @@ RAG/
 └── README.md                              # Documentación y guía
 ```
 
-## Instalación
+## Ejecución
 
 El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se ha utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
-Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace. Para realizar el RAG se ha utilizado el framework LangChain y se ha desarrollado una interfaz con Streamlit y Flask.
+Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace. Para realizar el RAG se han utilizado los frameworks LangChain y LangGraph, y se ha desarrollado una interfaz con Streamlit y Flask. Todas las API KEYS están almacenadas en un fichero .env que no se ha subido al repositorio.
 
 ```bash
 git clone https://github.com/aguayoe/RAG.git
