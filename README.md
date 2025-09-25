@@ -6,7 +6,7 @@ Repositorio para experimentos y pipelines de un sistema Retrieval-Augmented Gene
 
 Este proyecto busca aplicar técnicas de RAG para enriquecer el análisis y la consulta de documentación arqueológica, facilitando la integración de modelos de lenguaje con una base de datos bibliográfica especializada.
 
-![RAG Pipeline](img/Pipeline-RAG.drawio.png)
+![RAG Pipeline](img/Pipeline RAG-weaviateV2.drawio.png)
 ## Estructura
 ```
 RAG/
