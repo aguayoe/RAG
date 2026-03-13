@@ -78,7 +78,7 @@ multiprocess==0.70.16
 mypy-extensions==1.1.0
 narwhals==2.1.2
 networkx==3.5
-numpy==2.3.1
+numpy>=1.26,<3.0
 ollama==0.5.1
 openai==1.98.0
 orjson==3.10.18
