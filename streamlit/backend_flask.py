@@ -6,14 +6,6 @@ Autor: Elena Aguayo Jara
 Fecha: 2025
 """
 
-#!/usr/bin/env python3
-"""
-Aplicación de RAG para ejecutar un sistema RAG en Streamlit
-
-Autor: Elena Aguayo Jara
-Fecha: 2025
-"""
-
 from __future__ import annotations
 
 import os
@@ -34,7 +26,7 @@ from flask_cors import CORS
 
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
-from langchainhub import Client as _hub_client
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import OllamaLLM
 from sentence_transformers import SentenceTransformer
@@ -80,39 +72,78 @@ class Config:
     
     # Prompt templates
     PROMPTS = {
-        'prompt_one_shot': """Eres un asistente experto en arqueología, historia y datos geoespaciales. Responde la pregunta usando los contextos proporcionados, que pueden estar en español, inglés, francés, catalán o portugués.
+        'prompt_zero_shot': ChatPromptTemplate.from_template(
+            """Eres un asistente experto en arqueología, historia y sistemas de información geográfica. Responde la pregunta usando los contextos proporcionados, que pueden estar en español, inglés, francés, catalán o portugués.
 Sintetiza información de todos los contextos relevantes independientemente de su idioma. Si encuentras información relevante en cualquier idioma, úsala para construir tu respuesta en el mismo idioma en el que se realiza la pregunta.
 
 Contexto: {context}
 
 Pregunta: {question}
+
+Instrucciones:
+- Si encuentras información parcial en el contexto, intégrala en la respuesta aunque no sea completa.
+- Si no hay absolutamente nada relevante, responde claramente: "No hay información suficiente en el contexto".
+- NO INVENTES NI ALUCINES INFORMACIÓN.
+- Cuando sea posible, cita explícitamente los puntos clave del contexto (ej. autores, años, títulos de publicaciones, yacimientos, cronologías, dataciones, coordenadas).
+- Haz cálculos utilizando la distancia euclidiana, después transforma los grados a kilómetros y proporciona los nombres de los yacimientos.
+- Responde siempre de forma clara, estructurada y útil para un investigador.
+
+Basándote en la información anterior y en tu conocimiento sobre arqueología y sistemas de información geográfica, responde: 
+
+Respuesta:"""
+        ),
+
+        'prompt_one_shot': ChatPromptTemplate.from_template(
+            """Eres un asistente experto en arqueología, historia y sistemas de información geográfica. Responde la pregunta usando los contextos proporcionados, que pueden estar en español, inglés, francés, catalán o portugués.
+Sintetiza información de todos los contextos relevantes independientemente de su idioma. Si encuentras información relevante en cualquier idioma, úsala para construir tu respuesta en el mismo idioma en el que se realiza la pregunta.
+
+Contexto: {context}
+
+Pregunta: {question}
+
+Instrucciones:
+- Si encuentras información parcial en el contexto, intégrala en la respuesta aunque no sea completa.
+- Si no hay absolutamente nada relevante, responde claramente: "No hay información suficiente en el contexto".
+- NO INVENTES NI ALUCINES INFORMACIÓN.
+- Cuando sea posible, cita explícitamente los puntos clave del contexto (ej. autores, años, títulos de publicaciones, yacimientos, cronologías, dataciones, coordenadas).
+- Haz cálculos utilizando la distancia euclidiana, después transforma los grados a kilómetros y proporciona los nombres de los yacimientos.
+- Responde siempre de forma clara, estructurada y útil para un investigador.
 
 Ejemplo:
 Q: ¿Cuál es la utilidad de los análisis de isótopos de estroncio en Arqueología?
-A: El tema del desplazamiento, la movilidad y la migración ha sido altamente destacado como uno de los cinco grandes retos de la investigación arqueológica contemporánea (Kintigh et al., 2014: 12). El uso del análisis de isótopos de estroncio es hoy en día uno de los métodos más eficaces para afrontar este reto, ofreciendo un enfoque sistemático, cuantitativo y comparable a la movilidad de las poblaciones humanas y animales del pasado (Larsen 2018).
+A: El tema del desplazamiento, la movilidad y la migración ha sido altamente destacado como uno de los cinco grandes retos de la investigación arqueológica contemporánea. El uso del análisis de isótopos de estroncio es hoy en día uno de los métodos más eficaces para afrontar este reto, ofreciendo un enfoque sistemático, cuantitativo y comparable a la movilidad de las poblaciones humanas y animales del pasado (Larsen 2018).
 
-Respuesta:
-""",
+Basándote en la información anterior y en tu conocimiento sobre arqueología y sistemas de información geográfica, responde: 
 
-        'prompt_few_shot': """Eres un asistente experto en arqueología, historia y datos geoespaciales. Responde la pregunta usando los contextos proporcionados, que pueden estar en español, inglés, francés, catalán o portugués.
+Respuesta:"""
+        ),
+
+        'prompt_few_shot': ChatPromptTemplate.from_template(
+            """Eres un asistente experto en arqueología, historia y sistemas de información geográfica. Responde la pregunta usando los contextos proporcionados, que pueden estar en español, inglés, francés, catalán o portugués.
 Sintetiza información de todos los contextos relevantes independientemente de su idioma. Si encuentras información relevante en cualquier idioma, úsala para construir tu respuesta en el mismo idioma en el que se realiza la pregunta.
-
 Contexto: {context}
 
 Pregunta: {question}
 
+Instrucciones:
+- Si encuentras información parcial en el contexto, intégrala en la respuesta aunque no sea completa.
+- Si no hay absolutamente nada relevante, responde claramente: "No hay información suficiente en el contexto".
+- NO INVENTES NI ALUCINES INFORMACIÓN.
+- Cuando sea posible, cita explícitamente los puntos clave del contexto (ej. autores, años, títulos de publicaciones, yacimientos, cronologías, dataciones, coordenadas).
+- Haz cálculos utilizando la distancia euclidiana, después transforma los grados a kilómetros y proporciona los nombres de los yacimientos.
+- Responde siempre de forma clara, estructurada y útil para un investigador.
+
 Ejemplos:
 Q: ¿Cuál es la utilidad de los análisis de isótopos de estroncio en Arqueología?
-A: El análisis de isótopos de estroncio es uno de los métodos más eficaces para estudiar la movilidad de poblaciones humanas y animales del pasado, ofreciendo un enfoque sistemático y cuantitativo.
+A: El tema del desplazamiento, la movilidad y la migración ha sido altamente destacado como uno de los cinco grandes retos de la investigación arqueológica contemporánea. El uso del análisis de isótopos de estroncio es hoy en día uno de los métodos más eficaces para afrontar este reto, ofreciendo un enfoque sistemático, cuantitativo y comparable a la movilidad de las poblaciones humanas y animales del pasado (Larsen 2018).
 
-Q: ¿Qué técnicas de datación se usan en arqueología?
-A: Las principales técnicas incluyen radiocarbono (C14), termoluminiscencia, dendrocronología y datación por potasio-argón, cada una apropiada para diferentes tipos de materiales y rangos temporales.
+Q: ¿Cuáles son las características de la distribución geográfica de la muestra disponible de análisis de isótopos de estroncio en la Península Ibérica?
+A: La distribución de la muestra es variable y discontinua, con concentraciones asociadas a focos de investigación específicos (p. ej., Lisboa, valle del Ebro). La cobertura es irregular tanto geográfica como cronológicamente, lo que dificulta los estudios a escala ibérica para la mayoría de los periodos, a excepción de la Edad del Cobre (764 muestras). La escasez de datos es crítica en algunas épocas, como el Mesolítico, que cuenta con una única muestra. 
 
-Q: ¿Cómo se estudian los patrones de asentamiento prehistóricos?
-A: Se utilizan métodos como prospección arqueológica, análisis espacial con SIG, teledetección y excavaciones estratégicas para entender la distribución y organización de los sitios.
+Basándote en la información anterior y en tu conocimiento sobre arqueología y sistemas de información geográfica, responde: 
 
-Respuesta:
-"""
+Respuesta:"""
+        ),
     }
     
     def __init__(self):
@@ -472,20 +503,9 @@ class RAGEvaluator:
             context = "\n\n".join([doc.page_content for doc in docs])
             prompt_name = params['prompt_name']
 
-            if prompt_name == 'hub_rlm_rag':
-                template = _hub_client().pull(config.PROMPTS[prompt_name])
-            else:
-                template_str = config.PROMPTS.get(prompt_name)
-                if not template_str:
-                    raise ValueError(f"Prompt '{prompt_name}' not found in configuration")
-                class Template:
-                    def __init__(self, template_str):
-                        self.template_str = template_str
-
-                    def format(self, **kwargs):
-                        return self.template_str.format(**kwargs)
-
-                template = Template(template_str)
+            template = config.PROMPTS.get(prompt_name)
+            if not template:
+                raise ValueError(f"Prompt '{prompt_name}' not found in configuration")
 
             prompt_text = template.format(context=context, question=params['question'])
 
