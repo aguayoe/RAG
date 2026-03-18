@@ -36,9 +36,11 @@ pip install -r requirements.txt
 Para ejecutar streamlit, aplica cada línea de código en una terminal distinta:
 
 ```bash
-python backend_flask.py
+cd streamlit
+python3 backend_flask.py
 ```
 ```bash
+cd streamlit
 streamlit run app_streamlit.py
 ```
 Y ejecutar el modelo de lenguaje en otra terminal (inicializando Ollama previamente):
