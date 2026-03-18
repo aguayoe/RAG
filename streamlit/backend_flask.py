@@ -6,6 +6,14 @@ Autor: Elena Aguayo Jara
 Fecha: 2025
 """
 
+#!/usr/bin/env python3
+"""
+Aplicación de RAG para ejecutar un sistema RAG en Streamlit
+
+Autor: Elena Aguayo Jara
+Fecha: 2025
+"""
+
 from __future__ import annotations
 
 import os
@@ -26,9 +34,9 @@ from flask_cors import CORS
 
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
-from langchain import hub
+from langchainhub import Client as _hub_client
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 from sentence_transformers import SentenceTransformer
 import weaviate
 from langchain_weaviate import WeaviateVectorStore
@@ -65,9 +73,9 @@ class Config:
 
     # Weaviate collections mapping
     WEAVIATE_COLLECTIONS = {
-        'all-MiniLM-L6-v2': 'IdearqAllMiniLM',
-        'e5-large-instruct': 'IdearqE5',
-        'gte-multilingual-base': 'IdearqGTE',
+        'all-MiniLM-L6-v2': 'ChonkieE5yCoord',
+        'e5-large-instruct': 'ChonkieE5yCoord',
+        'gte-multilingual-base': 'ChonkieE5yCoord',
     }
     
     # Prompt templates
@@ -312,17 +320,17 @@ class ModelManager:
         self.llms = {}
         
         try:
-            self.llms['Llama-3.2-3B-Instruct'] = Ollama(
+            self.llms['Llama-3.2-3B-Instruct'] = OllamaLLM(
                 model="hf.co/bartowski/Llama-3.2-3B-Instruct-GGUF:Q8_0"
             )
             logging.info("Loaded Llama-3.2-3B-Instruct model")
             
-            self.llms['Phi-3-mini-4k-instruct'] = Ollama(
+            self.llms['Phi-3-mini-4k-instruct'] = OllamaLLM(
                 model="hf.co/MaziyarPanahi/Phi-3.5-mini-instruct-GGUF:Q6_K"
             )
             logging.info("Loaded Phi-3-mini-4k-instruct model")
             
-            self.llms['Qwen3-4B-Instruct-2507'] = Ollama(
+            self.llms['Qwen3-4B-Instruct-2507'] = OllamaLLM(
                 model="hopephoto/Qwen3-4B-Instruct-2507_q8"
             )
             logging.info("Loaded Qwen3-4B-Instruct-2507 model")
@@ -408,9 +416,9 @@ class RAGEvaluator:
         return WeaviateVectorStore(
             client=self.model_manager.weaviate_client,
             index_name=collection_name,
-            text_key="content",
+            text_key="page_content",
             embedding=embedding_model,
-            attributes=["filename", "title", "source", "chunk_index", "doc_index"]
+            attributes=["filename", "source", "chunk_index", "file_type", "chunking_method"]
         )
     
     
@@ -465,7 +473,7 @@ class RAGEvaluator:
             prompt_name = params['prompt_name']
 
             if prompt_name == 'hub_rlm_rag':
-                template = hub.pull(config.PROMPTS[prompt_name])
+                template = _hub_client().pull(config.PROMPTS[prompt_name])
             else:
                 template_str = config.PROMPTS.get(prompt_name)
                 if not template_str:
