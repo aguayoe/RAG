@@ -92,12 +92,12 @@ ollama run hf.co/MaziyarPanahi/Phi-3.5-mini-instruct-GGUF:Q6_K
 1. **Weaviate (Docker Compose)**
 2. **Flask API backend**
 3. **Streamlit UI**
-4. **Ollama model** (if your pipeline queries the LLM during interaction)
+4. **Ollama model** 
 
-### Common ports (may vary depending on your configuration)
+### Common ports 
 - **Streamlit**: `http://localhost:8501`
-- **Flask API**: often `http://localhost:5000` (check the console output)
-- **Weaviate**: commonly `http://localhost:8080` (check Docker logs)
+- **Flask API**: often `http://localhost:5000` 
+- **Weaviate**: commonly `http://localhost:8080` 
 
 If you get a “port already in use” error, stop the process using that port or change the port in the corresponding config/script.
 
