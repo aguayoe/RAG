@@ -1,58 +1,140 @@
+<div align="center">
+
 # RAG-IDEArq
+### Retrieval-Augmented Generation for IDEArq archaeological resources
 
-Repositorio para experimentos y pipelines de un sistema Retrieval-Augmented Generation (RAG) sobre recursos de IDEArq (http://www.idearqueologia.org).
+A research/experimental repository for building **RAG pipelines** on top of **IDEArq** resources  
+(http://www.idearqueologia.org) using **Weaviate**, **LangChain/LangGraph**, **Ollama** (local LLMs), and **HuggingFace** embeddings.
 
-## Descripción
+<p>
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-Required-0db7ed?style=for-the-badge&logo=docker&logoColor=white" />
+  <img alt="Weaviate" src="https://img.shields.io/badge/Vector%20DB-Weaviate-00B7B1?style=for-the-badge" />
+  <img alt="License" src="https://img.shields.io/badge/License-CC0--1.0-111827?style=for-the-badge" />
+</p>
 
-Este proyecto busca aplicar técnicas de RAG para enriquecer el análisis y la consulta de documentación arqueológica, facilitando la integración de modelos de lenguaje con una base de datos bibliográfica especializada.
+<p>
+  <a href="https://github.com/aguayoe" target="_blank">
+    <img alt="GitHub" src="https://img.shields.io/badge/GitHub-aguayoe-111827?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+</div>
+
+---
+
+## Overview
+This project explores how to apply **Retrieval-Augmented Generation (RAG)** to improve the analysis and querying of **archaeological documentation**, integrating LLMs with a vector database and an app layer.
 
 ![RAG Pipeline](img/Pipeline-RAG-weaviateV2.drawio.png)
-## Estructura
-```
+
+## Repository structure
+```text
 RAG/
-├── rag-idearq-langgraph-weaviate.ipynb    # Notebook del RAG y evaluación
-├── rag-indexacion-weaviate.ipynb          # Notebook de indexación                
-├── results.pdf                            # Resultados de evaluaciones 
-├── RAG-idearq/                            # Contenedor de docker de la base de datos Weaviate
-|   ├──  weaviate_data                     # Base de datos vectorial              
-|   └──  docker-compose.yml                # Fichero de instalación del contenedor
-├── streamlit                              # Aplicación de Streamlit
-|   ├── app_streamlit.py                   # Código de la aplicacióm
-|   └── backend_flask.py                   # API de Flask
-├── requirements.txt                       # Dependencias del proyecto
-└── README.md                              # Documentación y guía
+├── rag-idearq-langgraph-weaviate.ipynb     # RAG notebook + evaluation
+├── rag-indexacion-weaviate.ipynb           # Indexing notebook
+├── results.pdf                             # Evaluation results
+├── RAG-idearq/                             # Weaviate Docker setup
+│   ├── weaviate_data/                      # Local vector DB storage
+│   └── docker-compose.yml                  # Docker Compose for Weaviate
+├── streamlit/                              # Streamlit application
+│   ├── app_streamlit.py                    # Streamlit UI
+│   └── backend_flask.py                    # Flask API backend
+├── requirements.txt                        # Python dependencies
+└── README.md                               # Documentation
 ```
 
-## Ejecución
+## Requirements
+- Python **3.12.x** (tested on **3.12.11**)
+- Docker + Docker Compose
+- (Recommended) Conda environment
+- Ollama installed locally (for local LLM inference)
 
-El proyecto se ha realizado con Python 3.12.11 en un entorno de conda y se ha utilizado Weaviate como base de datos vectorial en un contenedor de Docker.
-Los modelos de lenguaje se han descargado en local con Ollama y los modelos de embedding provienen de HuggingFace. Para realizar el RAG se han utilizado los frameworks LangChain y LangGraph, y se ha desarrollado una interfaz con Streamlit y Flask. Todas las API KEYS están almacenadas en un fichero .env que no se ha subido al repositorio.
+## Quickstart
 
+### 1) Clone & install dependencies
 ```bash
 git clone https://github.com/aguayoe/RAG.git
 cd RAG
 pip install -r requirements.txt
 ```
-Para ejecutar streamlit, aplica cada línea de código en una terminal distinta:
 
+### 2) Start Weaviate (from `RAG-idearq/`)
 ```bash
-python3 streamlit/backend_flask.py
-```
-```bash
-streamlit run streamlit/app_streamlit.py
-```
-Y ejecutar el modelo de lenguaje en otra terminal (inicializando Ollama previamente):
-
-```bash
-ollama run hf.co/MaziyarPanahi/Phi-3.5-mini-instruct-GGUF:Q6_K
-```
-Por último, levantar el contenedor de Docker:
-
-```bash
+cd RAG-idearq
 docker compose up
 ```
 
-## Licencia
+### 3) Start the API + UI (two terminals)
+Terminal 1 (Flask API):
+```bash
+python3 streamlit/backend_flask.py
+```
 
+Terminal 2 (Streamlit app):
+```bash
+streamlit run streamlit/app_streamlit.py
+```
+
+### 4) Run the local LLM (separate terminal)
+Make sure Ollama is running first, then:
+```bash
+ollama run hf.co/MaziyarPanahi/Phi-3.5-mini-instruct-GGUF:Q6_K
+```
+
+## Notebooks
+- `rag-indexacion-weaviate.ipynb`: ingest/index data into Weaviate
+- `rag-idearq-langgraph-weaviate.ipynb`: run the RAG pipeline and evaluation
+
+## Troubleshooting
+
+### Recommended startup order
+1. **Weaviate (Docker Compose)**
+2. **Flask API backend**
+3. **Streamlit UI**
+4. **Ollama model** (if your pipeline queries the LLM during interaction)
+
+### Common ports (may vary depending on your configuration)
+- **Streamlit**: `http://localhost:8501`
+- **Flask API**: often `http://localhost:5000` (check the console output)
+- **Weaviate**: commonly `http://localhost:8080` (check Docker logs)
+
+If you get a “port already in use” error, stop the process using that port or change the port in the corresponding config/script.
+
+### Check that services are running
+- Docker containers:
+  ```bash
+  docker ps
+  ```
+- Weaviate logs:
+  ```bash
+  docker compose logs -f
+  ```
+  (Run inside `RAG-idearq/`.)
+
+### Docker Compose fails
+- Make sure Docker is running and you have permissions.
+- From `RAG-idearq/` try:
+  ```bash
+  docker compose down
+  docker compose up --build
+  ```
+
+### Python dependencies issues
+If `pip install -r requirements.txt` fails, create an isolated environment and retry:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Ollama issues
+- Confirm Ollama is installed and running.
+- List local models:
+  ```bash
+  ollama list
+  ```
+- If the model name differs, replace it in the `ollama run ...` command.
+
+## License
 CC0-1.0 license.
-
